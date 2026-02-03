@@ -1,0 +1,9 @@
+{
+  "server_name": "AURA_SERVER",
+  "tcp_port": 50505,
+  "udp_port": 40404,
+  "users": {
+    "c1": "Mario",
+    "c2": "Luigi"
+  }
+}
