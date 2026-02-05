@@ -1,113 +1,55 @@
-AURACHAT
-Descrizione del progetto
+# AURACHAT
 
-AURACHAT è un semplice sistema di chat client-server sviluppato in Python che utilizza i socket di rete.
-Il progetto dimostra l’uso combinato dei protocolli UDP e TCP per permettere ai client di scoprire automaticamente il server e comunicare tra loro tramite messaggi di testo.
+## Descrizione del progetto
+AURACHAT è un semplice sistema di chat **client-server** sviluppato in **Python**, basato sull’uso dei **socket di rete**.  
+Il progetto utilizza **UDP** per la discovery automatica del server e **TCP** per la comunicazione affidabile tra i client.
 
-Il server non partecipa attivamente alla comunicazione, ma si occupa solo della gestione dei client e dell’instradamento dei messaggi.
+Il server non partecipa attivamente alla chat, ma gestisce le connessioni e inoltra i messaggi tra i client.
 
-Struttura del progetto
+---
+
+## Struttura del progetto
+
 AURACHAT/
 ├── server.py
 ├── client.py
 └── util/
-    ├── config.json
-    └── log.xml
+├── config.json
+└── log.xml
 
-Descrizione file
 
-server.py → avvia il server TCP e UDP, gestisce i client e i log
+## Funzionamento
 
-client.py → permette a un utente di collegarsi e chattare
+1. Il server viene avviato e resta in attesa:
+   - UDP per la discovery
+   - TCP per le connessioni
 
-util/config.json → contiene porte di rete e configurazioni
+2. Il client:
+   - invia un messaggio UDP di discovery
+   - riceve l’IP del server
+   - si connette via TCP
 
-util/log.xml → salva i log del server in formato XML
+3. I client possono comunicare tra loro tramite il server.
 
-Funzionamento generale
+4. Il server:
+   - gestisce più client contemporaneamente
+   - chiude un client dopo **2 minuti di inattività**
+   - salva le attività nel file `log.xml`
 
-Il server viene avviato ed entra in attesa:
+---
 
-UDP per la discovery
+## Protocolli utilizzati
 
-TCP per le connessioni dei client
+- **UDP**
+  - utilizzato per la discovery automatica del server
 
-Il client:
+- **TCP**
+  - utilizzato per la comunicazione principale tra client
 
-invia un messaggio UDP di discovery
+---
 
-riceve l’IP del server
+## Comandi supportati
 
-si collega al server tramite TCP
-
-I client possono:
-
-inviare comandi
-
-chattare con altri client
-
-uscire dal sistema
-
-Il server:
-
-gestisce più client contemporaneamente
-
-chiude automaticamente un client dopo 2 minuti di inattività
-
-salva tutte le attività nel file log.xml
-
-Protocolli utilizzati
-
-UDP
-
-utilizzato per la fase di discovery
-
-permette ai client di trovare il server automaticamente
-
-TCP
-
-utilizzato per la comunicazione principale
-
-garantisce affidabilità dei messaggi
-
-Comandi principali supportati
-
-TIME → restituisce l’ora corrente del server
-
-EXIT → disconnette il client
-
-CHAT <ID> <messaggio> → invia un messaggio a un altro client
-
-Esempio:
-
-CHAT c2 Ciao come stai?
-
-Logging
-
-Il server salva gli eventi principali in formato XML, tra cui:
-
-connessione di un client
-
-disconnessione
-
-messaggi inviati
-
-Questo permette di mantenere uno storico strutturato delle attività.
-
-Obiettivi del progetto
-
-Utilizzare socket TCP e UDP
-
-Gestire più client contemporaneamente
-
-Implementare una chat client-client
-
-Gestire timeout di inattività
-
-Salvare i log in formato XML
-
-Mantenere il codice semplice e comprensibile
-
-Note finali
-
-Il progetto è stato sviluppato con l’obiettivo di comprendere il funzionamento delle reti, senza utilizzare librerie avanzate o database, mantenendo una struttura semplice e didattica.
+- `TIME` → restituisce l’ora corrente del server  
+- `EXIT` → disconnette il client  
+- `CHAT <ID> <messaggio>` → invia un messaggio a un altro client  
