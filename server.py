@@ -2,7 +2,7 @@ import socket
 import threading
 import time
 import json
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as filexml
 
 CONFIG = json.load(open("util/config.json"))
 
@@ -10,9 +10,9 @@ clients = {}
 last_activity = {}
 
 def log_event(text):
-    tree = ET.parse("util/log.xml")
+    tree = filexml.parse("util/log.xml")
     root = tree.getroot()
-    log = ET.SubElement(root, "log")
+    log = filexml.SubElement(root, "log")
     log.text = text
     tree.write("util/log.xml")
 
@@ -97,4 +97,5 @@ udp_thread.start()
 
 # Thread TCP principale
 tcp_server()
+
 
