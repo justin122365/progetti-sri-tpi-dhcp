@@ -56,7 +56,9 @@ def handle_client(conn, addr):
                     if len(parts) < 3:
                         conn.send(b"Errore: usa CHAT <ID> <messaggio>")
                     else:
-                        _, target, message = parts
+                        target = parts[1]
+                        message = parts[2]
+
                         if target in clients:
                             clients[target].send(f"{client_id}: {message}".encode())
                             print(f"[TCP] {client_id} ha inviato un messaggio a {target}")
@@ -95,3 +97,4 @@ udp_thread.start()
 
 # Thread TCP principale
 tcp_server()
+
